@@ -8,7 +8,7 @@ public class SwitchCase {
 		Scanner ler = new Scanner(System.in);
 		
 		int op;
-		double valor = 0;
+		double valor = 0;1
 		int qtd;
 		double preco;
 		
