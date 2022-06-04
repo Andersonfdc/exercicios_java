@@ -1,56 +1,51 @@
 package application;
 
-import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import entities.Reservation;
+import model.entities.Reservation;
+import model.exceptions.DomainException;
 
 public class Program {
 
-	public static void main(String[] args) throws HeadlessException, ParseException {
-		
-		Scanner sc =  new Scanner(System.in);
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		int number = Integer.parseInt(JOptionPane.showInputDialog("Room number:"));
-		Date checkIn = sdf.parse(JOptionPane.showInputDialog("Check-in date (dd/MM/yyyy): "));
-		Date checkOut = sdf.parse(JOptionPane.showInputDialog("Check-out date (dd/MM/yyyy): "));
-		
-		if (!checkOut.after(checkIn) ) {
-			JOptionPane.showMessageDialog(null,"Error in reservation: Check-out date must be after check-in date");
-		}else {
+		try {
+			System.out.print("Room number: ");
+			int number = sc.nextInt();
+			System.out.print("Check-in date (dd/MM/yyyy): ");
+			Date checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date (dd/MM/yyyy): ");
+			Date checkOut = sdf.parse(sc.next());
+			
 			Reservation reservation = new Reservation(number, checkIn, checkOut);
-			JOptionPane.showMessageDialog(null,reservation);
+			System.out.println("Reservation: " + reservation);
 			
-			JOptionPane.showMessageDialog(null,"Enter data to updaate the reservation");
-			checkIn = sdf.parse(JOptionPane.showInputDialog("Check-in date (dd/MM/yyyy): "));
-			checkOut = sdf.parse(JOptionPane.showInputDialog("Check-out date (dd/MM/yyyy): "));
-			
-			Date now = new Date(); 
-			if(checkIn.before(now) || checkOut.before(now)) {
-				JOptionPane.showMessageDialog(null,"Error in reservation: Reservation dates for update must be future dates");
-			}else if (!checkOut.after(checkIn) ){
-				JOptionPane.showMessageDialog(null,"Error in reservation: Check-out date must be after check-in date");
-			}else {
-				reservation.updateDates(checkIn, checkOut);
-				JOptionPane.showMessageDialog(null,reservation);		
-			}
+			System.out.println();
+			System.out.println("Enter data to update the reservation:");
+			System.out.print("Check-in date (dd/MM/yyyy): ");
+			checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date (dd/MM/yyyy): ");
+			checkOut = sdf.parse(sc.next());
 			
 			reservation.updateDates(checkIn, checkOut);
-			JOptionPane.showMessageDialog(null,reservation);
-			 
-			
+			System.out.println("Reservation: " + reservation);
 		}
-		
-		
-		
+		catch (ParseException e) {
+			System.out.println("Invalid date format");
+		}
+		catch (DomainException e) {
+			System.out.println("Error in reservation: " + e.getMessage());
+		}
+		catch (RuntimeException e) {
+			System.out.println("Unexpected error");
+		}
+
 		sc.close();
-
 	}
-
 }
