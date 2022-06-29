@@ -31,14 +31,23 @@ public class Program {
 			quarto[numQuarto] = new Aluno(nome, email, numQuarto);
 		}
 		
-		for(int j = 0; j < quarto.length; j++) {
-			if (quarto[j] != null) {
-				System.out.println("Nome: " + quarto[j].getNome());
-				System.out.println("Email: " + quarto[j].getEmail());
-				System.out.println("Numero do quarto: " + quarto[j].getNumQuarto());
+		/*
+		 * for(int j = 0; j < quarto.length; j++) {
+		 *	if (quarto[j] != null) {
+		 *		System.out.println("Nome: " + quarto[j].getNome());
+		 *		System.out.println("Email: " + quarto[j].getEmail());
+		 *		System.out.println("Numero do quarto: " + quarto[j].getNumQuarto());
+		 *	}
+		 * }
+		 */
+		
+		for(Aluno qrt : quarto) {
+			if (qrt != null) {
+				System.out.println("Nome: " + qrt.getNome());
+				System.out.println("Email: " + qrt.getEmail());
+				System.out.println("Numero do quarto: " + qrt.getNumQuarto());
 			}
 		}
-		
 		sc.close();
 
 	}
